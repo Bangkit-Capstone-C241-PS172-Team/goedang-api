@@ -5,12 +5,7 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('itemId')
-      table.string('itemName')
-      table.boolean('inOut')
-      
-      table.timestamp('created_at')
-      table.timestamp('updated_at')
+      table.increments('id')
     })
   }
 
@@ -18,8 +13,3 @@ export default class extends BaseSchema {
     this.schema.dropTable(this.tableName)
   }
 }
-
-
-
-
-

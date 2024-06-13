@@ -1,18 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 
-export default class Item extends BaseModel {
+export default class Predict extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
-
-  @column()
-  declare itemName: string
-
-  @column()
-  declare quantity: number
-
-  @column()
-  declare unit: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
