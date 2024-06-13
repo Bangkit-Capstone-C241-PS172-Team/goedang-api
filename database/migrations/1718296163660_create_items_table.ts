@@ -6,7 +6,9 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id')
-
+      table.string('name')
+      table.integer('quantity')
+      table.enu('measuring_unit', ['in', 'out'])
       table.timestamps(true, true)
     })
   }
