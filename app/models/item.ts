@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
+import User from './user.js'
 
 export default class Item extends BaseModel {
   @column({ isPrimary: true })
@@ -13,6 +15,9 @@ export default class Item extends BaseModel {
 
   @column()
   declare measuring_unit: string
+
+  @hasOne(() => User)
+  declare user_id: HasOne<typeof User>
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
