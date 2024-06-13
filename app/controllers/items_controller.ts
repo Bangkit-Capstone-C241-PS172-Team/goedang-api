@@ -5,7 +5,11 @@ export default class ItemsController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {}
+  async index({}: HttpContext) {
+    return {
+      message: 'Item',
+    }
+  }
 
   /**
    * Display form to create a new record
