@@ -18,9 +18,20 @@ export default class ItemEntriesController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
-    const data = request.body()
-    await ItemEntries.create(data)
+  async store({ request, response }: HttpContext) {
+    try {
+      const data = request.body()
+
+      // Menyimpan data baru ke dalam tabel Item
+      const entry = await ItemEntries.create(data)
+
+      // Mengembalikan respons sukses dengan data item yang baru dibuat
+      return response.status(201).send({ message: 'Item created successfully', data: entry })
+    } catch (error) {
+      // Menangani kesalahan jika gagal menyimpan data
+      console.error(error)
+      return response.status(500).send({ message: 'Failed to create item', error: error.message })
+    }
   }
 
   /**
