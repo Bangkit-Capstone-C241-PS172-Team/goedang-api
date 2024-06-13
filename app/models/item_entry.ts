@@ -9,7 +9,10 @@ export default class ItemEntries extends BaseModel {
   declare id: number
 
   @column()
-  declare in_out: boolean
+  declare itemId: number
+
+  @column()
+  declare inOut: boolean
 
   @column()
   declare quantity: number
@@ -19,6 +22,9 @@ export default class ItemEntries extends BaseModel {
 
   @column()
   declare total: number
+
+  @column()
+  declare userId: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
