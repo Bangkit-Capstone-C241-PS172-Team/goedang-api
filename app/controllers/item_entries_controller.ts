@@ -41,5 +41,18 @@ export default class ItemEntriesController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {}
+  async destroy({ params, response }: HttpContext) {
+    try {
+      const { id } = params
+      const entry = await ItemEntries.findOrFail(id)
+
+      // Lakukan operasi penghapusan item sesuai kebutuhan
+      await entry.delete()
+
+      return response.status(200).send({ message: `Entry with id ${id} deleted successfully` })
+    } catch (error) {
+      console.error(error)
+      return response.status(500).send({ message: 'Failed to delete entry' })
+    }
+  }
 }
