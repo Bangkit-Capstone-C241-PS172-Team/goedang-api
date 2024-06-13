@@ -12,7 +12,7 @@ export default class ItemEntries extends BaseModel {
   declare itemId: number
 
   @column()
-  declare inOut: boolean
+  declare inOut: string
 
   @column()
   declare quantity: number
