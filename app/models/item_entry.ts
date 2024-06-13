@@ -1,12 +1,14 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import type { HasOne } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
+import Item from '#models/item'
 
 export default class ItemLog extends BaseModel {
   @column({ isPrimary: true })
   declare id: string
 
-  @column()
-  declare item_id: number
+  @hasOne(() => Item)
+  declare item_id: HasOne<typeof Item>
 
   @column()
   declare in_out: boolean

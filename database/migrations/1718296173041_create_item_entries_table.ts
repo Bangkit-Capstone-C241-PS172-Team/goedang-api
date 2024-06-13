@@ -5,8 +5,8 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.uuid('id')
-      table.uuid('item_id').notNullable().references('items.id').onDelete('CASCADE')
+      table.increments('id')
+      table.integer('item_id').notNullable().unsigned().references('items.id').onDelete('CASCADE')
       table.enu('in_out', ['in', 'out']).notNullable()
       table.integer('quantity').notNullable()
       table.integer('price').notNullable()
