@@ -14,18 +14,15 @@ export default class ItemEntriesController {
   /**
    * Display form to create a new record
    */
-  async create({ request }: HttpContext) {
-    const data = request.body()
-
-    await ItemEntries.create(data)
-
-    return data
-  }
+  async create({}: HttpContext) {}
 
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {}
+  async store({ request }: HttpContext) {
+    const data = request.body()
+    await ItemEntries.create(data)
+  }
 
   /**
    * Show individual record

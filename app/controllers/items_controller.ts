@@ -1,3 +1,4 @@
+import Item from '#models/item'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ItemsController {
@@ -14,7 +15,10 @@ export default class ItemsController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {}
+  async store({ request }: HttpContext) {
+    const data = request.body()
+    await Item.create(data)
+  }
 
   /**
    * Show individual record
