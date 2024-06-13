@@ -9,5 +9,5 @@
 
 import router from '@adonisjs/core/services/router'
 
-router.get('/stocks', '#controllers/stocks_controller.index')
-router.post('/stocks', '#controllers/stocks_controller.store')
+router.get('/item_entries', '#controllers/item_entries_controller.index')
+router.post('/item_entries', '#controllers/item_entries_controller.store')
