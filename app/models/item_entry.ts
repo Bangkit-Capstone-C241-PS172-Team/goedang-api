@@ -3,7 +3,7 @@ import type { HasOne } from '@adonisjs/lucid/types/relations'
 import { BaseModel, column, hasOne } from '@adonisjs/lucid/orm'
 import Item from '#models/item'
 
-export default class ItemLog extends BaseModel {
+export default class ItemEntries extends BaseModel {
   @column({ isPrimary: true })
   declare id: string
 
