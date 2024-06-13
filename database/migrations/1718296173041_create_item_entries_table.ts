@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.integer('quantity')
       table.integer('price')
       table.integer('total')
+      table.integer('user_id').references('users.id')
       table.timestamps(true, true)
     })
   }

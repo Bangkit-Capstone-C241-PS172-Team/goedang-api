@@ -9,6 +9,7 @@ export default class extends BaseSchema {
       table.string('name')
       table.integer('quantity')
       table.enu('measuring_unit', ['in', 'out'])
+      table.integer('user_id').references('users.id')
       table.timestamps(true, true)
     })
   }
