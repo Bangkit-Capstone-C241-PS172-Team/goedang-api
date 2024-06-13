@@ -12,7 +12,7 @@ export default class Item extends BaseModel {
   declare quantity: number
 
   @column()
-  declare unit: string
+  declare measuring_unit: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
