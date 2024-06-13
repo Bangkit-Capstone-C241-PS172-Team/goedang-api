@@ -1,4 +1,4 @@
-import ItemLog from '#models/item_entry'
+import ItemEntries from '#models/item_entry'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ItemEntriesController {
@@ -17,7 +17,7 @@ export default class ItemEntriesController {
   async create({ request }: HttpContext) {
     const data = request.body()
 
-    await ItemLog.create(data)
+    await ItemEntries.create(data)
 
     return data
   }
