@@ -6,12 +6,12 @@ export default class extends BaseSchema {
   async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.uuid('id')
-      table.integer('item_id').references('items.id')
-      table.enu('in_out', ['in', 'out'])
-      table.integer('quantity')
-      table.integer('price')
-      table.integer('total')
-      table.integer('user_id').references('users.id').onDelete('CASCADE')
+      table.integer('item_id').notNullable().references('items.id').onDelete('CASCADE')
+      table.enu('in_out', ['in', 'out']).notNullable()
+      table.integer('quantity').notNullable()
+      table.integer('price').notNullable()
+      table.integer('total').notNullable()
+      table.integer('user_id').notNullable().references('users.id').onDelete('CASCADE')
       table.timestamps(true, true)
     })
   }
