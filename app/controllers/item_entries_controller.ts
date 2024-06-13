@@ -6,9 +6,8 @@ export default class ItemEntriesController {
    * Display a list of resource
    */
   async index({}: HttpContext) {
-    return {
-      message: 'Item Entries',
-    }
+    const entries = await ItemEntries.all()
+    return entries
   }
 
   /**
