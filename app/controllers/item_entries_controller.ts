@@ -5,9 +5,18 @@ export default class ItemEntriesController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
-    const entries = await ItemEntries.all()
-    return entries
+  async index({ response }: HttpContext) {
+    try {
+      // Mengambil semua data Item dari database
+      const entries = await ItemEntries.all()
+
+      // Mengembalikan respons dengan data items
+      return response.status(200).send(entries)
+    } catch (error) {
+      // Menangani kesalahan jika gagal mengambil data
+      console.error(error)
+      return response.status(500).send({ message: 'Failed to fetch items', error: error.message })
+    }
   }
 
   /**
