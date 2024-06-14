@@ -63,7 +63,12 @@ export default class ItemEntriesController {
   /**
    * Edit individual record
    */
-  async edit({ params, response, request }: HttpContext) {
+  async edit({ params }: HttpContext) {}
+
+  /**
+   * Handle form submission for the edit action
+   */
+  async update({ params, request, response }: HttpContext) {
     try {
       const { id } = params
       const entry = await ItemEntries.findOrFail(id)
@@ -81,11 +86,6 @@ export default class ItemEntriesController {
       return response.status(500).send({ message: 'Failed to update entry', error: error.message })
     }
   }
-
-  /**
-   * Handle form submission for the edit action
-   */
-  async update({ params, request }: HttpContext) {}
 
   /**
    * Delete record
