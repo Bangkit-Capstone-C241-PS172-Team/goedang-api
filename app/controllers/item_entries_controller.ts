@@ -46,7 +46,19 @@ export default class ItemEntriesController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {}
+  async show({ params, response }: HttpContext) {
+    try {
+      const { id } = params
+      const entry = await ItemEntries.findOrFail(id)
+
+      // Mengembalikan respons sukses dengan data entry yang ditemukan
+      return response.status(200).send(entry)
+    } catch (error) {
+      // Menangani kesalahan jika gagal menemukan data
+      console.error(error)
+      return response.status(404).send({ message: 'Entry not found', error: error.message })
+    }
+  }
 
   /**
    * Edit individual record
