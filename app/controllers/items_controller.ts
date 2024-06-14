@@ -5,10 +5,18 @@ export default class ItemsController {
   /**
    * Display a list of resource
    */
-  async index({ response }: HttpContext) {
+  async index({ response, auth }: HttpContext) {
     try {
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+      const userId = auth.user?.id
+
+      if (userId === undefined) {
+        return response.status(401).send({ message: 'You must login to access this resource' })
+      }
+
       // Mengambil semua data Item dari database
-      const items = await Item.all()
+      const items = await Item.findManyBy('user_id', userId)
 
       // Mengembalikan respons dengan data items
       return response.status(200).send(items)
@@ -46,17 +54,29 @@ export default class ItemsController {
   /**
    * Show individual record
    */
-  async show({ params, response }: HttpContext) {
+  async show({ params, response, auth }: HttpContext) {
     try {
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+      const userId = auth.user?.id
+
+      if (userId === undefined) {
+        return response.status(401).send({ message: 'You must login to access this resource' })
+      }
+
+      // Mengambil data Item dari database
       const { id } = params
-      const item = await Item.findOrFail(id)
+      const item = await Item.query()
+        .where('user_id', userId ?? '')
+        .andWhere('id', id)
+        .firstOrFail()
 
       // Mengembalikan respons sukses dengan data item yang ditemukan
       return response.status(200).send(item)
     } catch (error) {
       // Menangani kesalahan jika gagal menemukan data
       console.error(error)
-      return response.status(404).send({ message: 'Item not found', error: error.message })
+      return response.status(404).send({ message: 'Failed to fetch item', error: error.message })
     }
   }
 
