@@ -2,7 +2,7 @@ import Item from '#models/item'
 import type { HttpContext } from '@adonisjs/core/http'
 import type { NextFn } from '@adonisjs/core/types/http'
 
-export default class EnsureOwnerMiddleware {
+export default class EnsureLoginMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     /**
      * Middleware logic goes here (before the next call)
@@ -10,8 +10,13 @@ export default class EnsureOwnerMiddleware {
     const { auth, response } = ctx
 
     try {
-      // Memastikan pengguna sudah login
-      await auth.use('api').authenticate()
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+      const userId = auth.user?.id
+
+      if (userId === undefined) {
+        return response.status(401).send({ message: 'You must login to access this resource' })
+      }
 
       /**
        * Call next method in the pipeline and return its output
