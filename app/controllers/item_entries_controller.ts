@@ -63,7 +63,24 @@ export default class ItemEntriesController {
   /**
    * Edit individual record
    */
-  async edit({ params }: HttpContext) {}
+  async edit({ params, response, request }: HttpContext) {
+    try {
+      const { id } = params
+      const entry = await ItemEntries.findOrFail(id)
+      const data = request.body()
+
+      // Mengupdate data entry dengan data baru
+      entry.merge(data)
+      await entry.save()
+
+      // Mengembalikan respons sukses dengan data entry yang diperbarui
+      return response.status(200).send({ message: 'Entry updated successfully', data: entry })
+    } catch (error) {
+      // Menangani kesalahan jika gagal mengupdate data
+      console.error(error)
+      return response.status(500).send({ message: 'Failed to update entry', error: error.message })
+    }
+  }
 
   /**
    * Handle form submission for the edit action
@@ -84,7 +101,7 @@ export default class ItemEntriesController {
       return response.status(200).send({ message: `Entry with id ${id} deleted successfully` })
     } catch (error) {
       console.error(error)
-      return response.status(500).send({ message: 'Failed to delete entry' })
+      return response.status(500).send({ message: 'Failed to delete entry', error: error.message })
     }
   }
 }
