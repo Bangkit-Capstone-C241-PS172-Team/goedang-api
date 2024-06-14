@@ -8,6 +8,7 @@
 */
 
 import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
 // Item
 router.get('/items', '#controllers/items_controller.index')
 router.post('/items', '#controllers/items_controller.store')
@@ -20,3 +21,11 @@ router.post('/item_entries', '#controllers/item_entries_controller.store')
 router.get('/item_entries/:id', '#controllers/item_entries_controller.show')
 router.put('/item_entries/:id', '#controllers/item_entries_controller.update')
 router.delete('/item_entries/:id', '#controllers/item_entries_controller.destroy')
+// Login & Register
+router.post('/register', '#controllers/auth_controller.register').as('auth.register')
+router.post('/login', '#controllers/auth_controller.login').as('auth.login')
+router
+  .delete('/logout', '#controllers/auth_controller.logout')
+  .as('auth.logout')
+  .use(middleware.auth())
+router.get('/me', '#controllers/auth_controller.me').as('auth.me')
