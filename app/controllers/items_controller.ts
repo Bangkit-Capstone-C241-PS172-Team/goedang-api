@@ -46,7 +46,19 @@ export default class ItemsController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {}
+  async show({ params, response }: HttpContext) {
+    try {
+      const { id } = params
+      const item = await Item.findOrFail(id)
+
+      // Mengembalikan respons sukses dengan data item yang ditemukan
+      return response.status(200).send(item)
+    } catch (error) {
+      // Menangani kesalahan jika gagal menemukan data
+      console.error(error)
+      return response.status(404).send({ message: 'Item not found', error: error.message })
+    }
+  }
 
   /**
    * Edit individual record
@@ -56,7 +68,24 @@ export default class ItemsController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {}
+  async update({ params, request, response }: HttpContext) {
+    try {
+      const { id } = params
+      const item = await Item.findOrFail(id)
+      const data = request.body()
+
+      // Mengupdate data item dengan data baru
+      item.merge(data)
+      await item.save()
+
+      // Mengembalikan respons sukses dengan data item yang diperbarui
+      return response.status(200).send({ message: 'Item updated successfully', data: item })
+    } catch (error) {
+      // Menangani kesalahan jika gagal mengupdate data
+      console.error(error)
+      return response.status(500).send({ message: 'Failed to update item', error: error.message })
+    }
+  }
 
   /**
    * Delete record

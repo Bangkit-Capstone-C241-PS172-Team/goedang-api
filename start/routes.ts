@@ -11,7 +11,7 @@ import router from '@adonisjs/core/services/router'
 // Item
 router.get('/items', '#controllers/items_controller.index')
 router.post('/items', '#controllers/items_controller.store')
-router.get('/items/:id', '#controllers/items_controsller.show')
+router.get('/items/:id', '#controllers/items_controller.show')
 router.put('/items/:id', '#controllers/items_controller.update')
 router.delete('/items/:id', '#controllers/items_controller.destroy')
 // Item Entries
