@@ -21,10 +21,18 @@ export default class AuthController {
     return { message: 'success' }
   }
 
-  async me({ auth }: HttpContext) {
-    await auth.check()
-    return {
-      user: auth.user,
+  async me({ auth, response }: HttpContext) {
+    try {
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+
+      // Mengembalikan data pengguna yang login
+      return {
+        user: auth.user,
+      }
+    } catch (error) {
+      // Mengembalikan respons error jika pengguna belum login
+      return response.unauthorized({ message: 'You must be logged in to access this resource' })
     }
   }
 }
