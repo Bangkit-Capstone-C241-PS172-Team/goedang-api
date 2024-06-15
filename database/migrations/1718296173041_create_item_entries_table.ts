@@ -5,13 +5,13 @@ export default class extends BaseSchema {
 
   async up() {
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
-      table.integer('item_id').notNullable().unsigned().references('items.id').onDelete('CASCADE')
+      table.uuid('id').primary().notNullable()
+      table.uuid('item_id').notNullable().unsigned().references('items.id').onDelete('CASCADE')
       table.enu('in_out', ['in', 'out']).notNullable()
       table.integer('quantity').notNullable()
       table.integer('price').notNullable()
       table.integer('total').notNullable()
-      table.integer('user_id').notNullable().unsigned().references('users.id').onDelete('CASCADE')
+      table.uuid('user_id').notNullable().unsigned().references('users.id').onDelete('CASCADE')
       table.timestamps(true, true)
     })
   }
