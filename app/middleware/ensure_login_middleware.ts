@@ -14,7 +14,10 @@ export default class EnsureLoginMiddleware {
       const userId = auth.user?.id
 
       if (userId === undefined) {
-        return response.status(401).send({ message: 'You must login to access this resource' })
+        throw new Error('You must login with valid account to access this resource')
+        // return response.unauthorized({
+        //   message: 'You must login with valid account to access this resource',
+        // })
       }
 
       /**
@@ -22,7 +25,9 @@ export default class EnsureLoginMiddleware {
        */
       await next()
     } catch (error) {
-      return response.unauthorized({ message: 'You must login to access this resource' })
+      return response.unauthorized({
+        messages: error.message,
+      })
     }
   }
 }
