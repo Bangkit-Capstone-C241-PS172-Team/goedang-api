@@ -24,6 +24,8 @@ router
     router.get('/item_entries/:id', '#controllers/item_entries_controller.show')
     router.put('/item_entries/:id', '#controllers/item_entries_controller.update')
     router.delete('/item_entries/:id', '#controllers/item_entries_controller.destroy')
+    // Get Current User
+    router.get('/me', '#controllers/auth_controller.me').as('auth.me')
   })
   .use(middleware.ensureLogin())
 
@@ -34,4 +36,3 @@ router
   .delete('/logout', '#controllers/auth_controller.logout')
   .as('auth.logout')
   .use(middleware.auth())
-router.get('/me', '#controllers/auth_controller.me').as('auth.me')
