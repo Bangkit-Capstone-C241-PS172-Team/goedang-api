@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, afterSave, belongsTo, column } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import Item from './item.js'
 
@@ -37,4 +37,13 @@ export default class ItemEntries extends BaseModel {
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @afterSave()
+  static async updateItemQuantity(itemEntry: ItemEntries) {
+    const totalQuantity = await ItemEntries.query()
+      .where('item_id', itemEntry.itemId)
+      .sum('quantity as total')
+
+    await Item.query().where('id', itemEntry.itemId).update({ quantity: totalQuantity[0].total })
+  }
 }
