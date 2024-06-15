@@ -9,7 +9,7 @@ export default class extends BaseSchema {
       table.string('name').notNullable()
       table.integer('quantity').notNullable()
       table.enu('measuring_unit', ['lt', 'kg', 'pcs', 'box', 'roll', 'pack', 'sheet']).notNullable()
-      table.uuid('user_id').notNullable().unsigned().references('users.id').onDelete('CASCADE')
+      table.uuid('user_id').notNullable().references('users.id').onDelete('CASCADE')
       table.timestamps(true, true)
     })
   }
