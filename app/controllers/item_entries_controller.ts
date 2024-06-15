@@ -15,15 +15,15 @@ export default class ItemEntriesController {
         return response.status(401).send({ message: 'You must login to access this resource' })
       }
 
-      // Mengambil semua data Item dari database
+      // Mengambil semua data Entry dari database
       const entries = await ItemEntries.findManyBy('user_id', userId)
 
-      // Mengembalikan respons dengan data items
+      // Mengembalikan respons dengan data entries
       return response.status(200).send(entries)
     } catch (error) {
       // Menangani kesalahan jika gagal mengambil data
       console.error(error)
-      return response.status(500).send({ message: 'Failed to fetch items', error: error.message })
+      return response.status(500).send({ message: 'Failed to fetch entries', error: error.message })
     }
   }
 
@@ -39,15 +39,15 @@ export default class ItemEntriesController {
     try {
       const data = request.body()
 
-      // Menyimpan data baru ke dalam tabel Item
+      // Menyimpan data baru ke dalam tabel Item Entries
       const entry = await ItemEntries.create(data)
 
-      // Mengembalikan respons sukses dengan data item yang baru dibuat
-      return response.status(201).send({ message: 'Item created successfully', data: entry })
+      // Mengembalikan respons sukses dengan data entry yang baru dibuat
+      return response.status(201).send({ message: 'Entry created successfully', data: entry })
     } catch (error) {
       // Menangani kesalahan jika gagal menyimpan data
       console.error(error)
-      return response.status(500).send({ message: 'Failed to create item', error: error.message })
+      return response.status(500).send({ message: 'Failed to create entry', error: error.message })
     }
   }
 
@@ -64,7 +64,7 @@ export default class ItemEntriesController {
         return response.status(401).send({ message: 'You must login to access this resource' })
       }
 
-      // Mengambil data Item dari database
+      // Mengambil data Entry dari database
       const { id } = params
       const entry = await ItemEntries.query()
         .where('user_id', userId ?? '')
@@ -115,7 +115,7 @@ export default class ItemEntriesController {
       const { id } = params
       const entry = await ItemEntries.findOrFail(id)
 
-      // Lakukan operasi penghapusan item sesuai kebutuhan
+      // Lakukan operasi penghapusan entry sesuai kebutuhan
       await entry.delete()
 
       return response.status(200).send({ message: `Entry with id ${id} deleted successfully` })
