@@ -5,10 +5,18 @@ export default class ItemEntriesController {
   /**
    * Display a list of resource
    */
-  async index({ response }: HttpContext) {
+  async index({ response, auth }: HttpContext) {
     try {
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+      const userId = auth.user?.id
+
+      if (userId === undefined) {
+        return response.status(401).send({ message: 'You must login to access this resource' })
+      }
+
       // Mengambil semua data Item dari database
-      const entries = await ItemEntries.all()
+      const entries = await ItemEntries.findManyBy('user_id', userId)
 
       // Mengembalikan respons dengan data items
       return response.status(200).send(entries)
@@ -46,10 +54,22 @@ export default class ItemEntriesController {
   /**
    * Show individual record
    */
-  async show({ params, response }: HttpContext) {
+  async show({ params, response, auth }: HttpContext) {
     try {
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+      const userId = auth.user?.id
+
+      if (userId === undefined) {
+        return response.status(401).send({ message: 'You must login to access this resource' })
+      }
+
+      // Mengambil data Item dari database
       const { id } = params
-      const entry = await ItemEntries.findOrFail(id)
+      const entry = await ItemEntries.query()
+        .where('user_id', userId ?? '')
+        .andWhere('id', id)
+        .firstOrFail()
 
       // Mengembalikan respons sukses dengan data entry yang ditemukan
       return response.status(200).send(entry)
