@@ -1,12 +1,15 @@
 import { DateTime } from 'luxon'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import { BaseModel, afterSave, belongsTo, column } from '@adonisjs/lucid/orm'
+import { BaseModel, afterSave, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import Item from './item.js'
+import { randomUUID } from 'node:crypto'
 
 export default class ItemEntries extends BaseModel {
+  static selfAssignPrimaryKey = true
+
   @column({ isPrimary: true })
-  declare id: number
+  declare id: string
 
   @column()
   declare itemId: number
@@ -37,6 +40,11 @@ export default class ItemEntries extends BaseModel {
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @beforeCreate()
+  static assignUuid(itemEntry: ItemEntries) {
+    itemEntry.id = randomUUID()
+  }
 
   @afterSave()
   static async updateItemQuantity(itemEntry: ItemEntries) {
