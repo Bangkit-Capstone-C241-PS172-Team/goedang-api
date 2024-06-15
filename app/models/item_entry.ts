@@ -4,6 +4,7 @@ import { BaseModel, afterSave, beforeCreate, belongsTo, column } from '@adonisjs
 import User from './user.js'
 import Item from './item.js'
 import { randomUUID } from 'node:crypto'
+import db from '@adonisjs/lucid/services/db'
 
 export default class ItemEntries extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -50,8 +51,11 @@ export default class ItemEntries extends BaseModel {
   static async updateItemQuantity(itemEntry: ItemEntries) {
     const totalQuantity = await ItemEntries.query()
       .where('item_id', itemEntry.itemId)
-      .sum('quantity as total')
+      .select(db.raw("sum(case when in_out = 'in' then quantity else -quantity end) as total"))
+      .first()
 
-    await Item.query().where('id', itemEntry.itemId).update({ quantity: totalQuantity[0].total })
+    if (totalQuantity !== null) {
+      await Item.query().where('id', itemEntry.itemId).update({ quantity: totalQuantity.total })
+    }
   }
 }
