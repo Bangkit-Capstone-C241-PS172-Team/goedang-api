@@ -5,7 +5,7 @@ export default class ItemEntriesController {
   /**
    * Display a list of resource
    */
-  async index({ response, auth }: HttpContext) {
+  async index({ response, auth, request }: HttpContext) {
     try {
       // Memeriksa apakah pengguna sudah login
       await auth.check()
@@ -16,7 +16,15 @@ export default class ItemEntriesController {
       }
 
       // Mengambil semua data Entry dari database
-      const entries = await ItemEntries.findManyBy('user_id', userId)
+      let entries = await ItemEntries.findManyBy('user_id', userId)
+
+      // Mengambil data inOut dari parameter
+      const inOut = request.qs().inOut
+
+      // Filter entries berdasarkan inOut jika diberikan
+      if (inOut) {
+        entries = entries.filter((entry) => entry.inOut === inOut)
+      }
 
       // Mengembalikan respons dengan data entries
       return response.status(200).send(entries)
