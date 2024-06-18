@@ -16,6 +16,11 @@ export default class Item extends BaseModel {
     static assignUuid(item) {
         item.id = randomUUID();
     }
+    static setDefaultThreshold(item) {
+        if (item.threshold === undefined || item.threshold === null) {
+            item.threshold = 20;
+        }
+    }
 }
 __decorate([
     column({ isPrimary: true }),
@@ -33,6 +38,10 @@ __decorate([
     column(),
     __metadata("design:type", String)
 ], Item.prototype, "measuring_unit", void 0);
+__decorate([
+    column(),
+    __metadata("design:type", Number)
+], Item.prototype, "threshold", void 0);
 __decorate([
     column(),
     __metadata("design:type", Number)
@@ -55,4 +64,10 @@ __decorate([
     __metadata("design:paramtypes", [Item]),
     __metadata("design:returntype", void 0)
 ], Item, "assignUuid", null);
+__decorate([
+    beforeCreate(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Item]),
+    __metadata("design:returntype", void 0)
+], Item, "setDefaultThreshold", null);
 //# sourceMappingURL=item.js.map

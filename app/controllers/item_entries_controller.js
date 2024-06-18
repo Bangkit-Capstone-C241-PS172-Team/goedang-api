@@ -50,7 +50,7 @@ export default class ItemEntriesController {
             return response.status(404).send({ message: 'Entry not found', error: error.message });
         }
     }
-    async edit({ params }) { }
+    async edit({}) { }
     async update({ params, request, response }) {
         try {
             const { id } = params;

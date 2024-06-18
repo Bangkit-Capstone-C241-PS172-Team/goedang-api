@@ -4,12 +4,17 @@ export default class AuthController {
     async register({ request }) {
         const data = await request.validateUsing(registerValidator);
         const user = await User.create(data);
-        return User.accessTokens.create(user);
+        return user;
     }
     async login({ request }) {
         const { email, password } = await request.validateUsing(loginValidator);
         const user = await User.verifyCredentials(email, password);
-        return User.accessTokens.create(user);
+        const accessTokens = await User.accessTokens.create(user);
+        const resData = {
+            accessTokens: accessTokens,
+            user: user,
+        };
+        return resData;
     }
     async logout({ auth }) {
         const user = auth.user;

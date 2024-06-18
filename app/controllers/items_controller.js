@@ -46,7 +46,7 @@ export default class ItemsController {
             return response.status(404).send({ message: 'Failed to fetch item', error: error.message });
         }
     }
-    async edit({ params }) { }
+    async edit({}) { }
     async update({ params, request, response }) {
         try {
             const { id } = params;
