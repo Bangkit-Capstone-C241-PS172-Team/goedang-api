@@ -6,13 +6,23 @@ export default class AuthController {
   async register({ request }: HttpContext) {
     const data = await request.validateUsing(registerValidator)
     const user = await User.create(data)
-    return User.accessTokens.create(user)
+    const accessTokens = await User.accessTokens.create(user)
+    const resData = {
+      accessTokens: accessTokens,
+      user: user,
+    }
+    return resData
   }
 
   async login({ request }: HttpContext) {
     const { email, password } = await request.validateUsing(loginValidator)
     const user = await User.verifyCredentials(email, password)
-    return User.accessTokens.create(user)
+    const accessTokens = await User.accessTokens.create(user)
+    const resData = {
+      accessTokens: accessTokens,
+      user: user,
+    }
+    return resData
   }
 
   async logout({ auth }: HttpContext) {
