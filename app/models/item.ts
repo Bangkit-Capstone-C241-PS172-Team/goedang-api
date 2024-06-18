@@ -20,6 +20,9 @@ export default class Item extends BaseModel {
   declare measuring_unit: string
 
   @column()
+  declare threshold: number
+
+  @column()
   declare userId: number
 
   @column.dateTime({ autoCreate: true })
@@ -34,5 +37,12 @@ export default class Item extends BaseModel {
   @beforeCreate()
   static assignUuid(item: Item) {
     item.id = randomUUID()
+  }
+
+  @beforeCreate()
+  static setDefaultThreshold(item: Item) {
+    if (item.threshold === undefined || item.threshold === null) {
+      item.threshold = 20
+    }
   }
 }
