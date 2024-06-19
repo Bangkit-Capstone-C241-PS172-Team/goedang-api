@@ -132,4 +132,27 @@ export default class ItemEntriesController {
       return response.status(500).send({ message: 'Failed to delete entry', error: error.message })
     }
   }
+
+  async indexByItemId({ params, response, auth }: HttpContext) {
+    try {
+      // Memeriksa apakah pengguna sudah login
+      await auth.check()
+      const userId = auth.user?.id
+
+      if (userId === undefined) {
+        return response.status(401).send({ message: 'You must login to access this resource' })
+      }
+
+      // Mengambil data Entry dari database
+      const { id } = params
+      const entries = await ItemEntries.findManyBy({ userId: userId, itemId: id })
+
+      // Mengembalikan respons sukses dengan data entry yang ditemukan
+      return response.status(200).send(entries)
+    } catch (error) {
+      // Menangani kesalahan jika gagal menemukan data
+      console.error(error)
+      return response.status(404).send({ message: 'Entry not found', error: error.message })
+    }
+  }
 }
