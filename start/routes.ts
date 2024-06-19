@@ -24,6 +24,10 @@ router
     router.get('/item_entries/:id', '#controllers/item_entries_controller.show')
     router.put('/item_entries/:id', '#controllers/item_entries_controller.update')
     router.delete('/item_entries/:id', '#controllers/item_entries_controller.destroy')
+    // Item Entries by Item Id
+    router.get('/item_entries/item/:id', '#controllers/item_entries_controller.indexByItemId')
+    // Sales Overview
+    router.get('/sales_overview', '#controllers/item_entries_controller.indexSalesOverview')
     // Get Current User
     router.get('/me', '#controllers/auth_controller.me').as('auth.me')
   })
