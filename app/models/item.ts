@@ -1,8 +1,9 @@
 import { DateTime } from 'luxon'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, beforeCreate, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import User from './user.js'
 import { randomUUID } from 'node:crypto'
+import ItemEntries from './item_entry.js'
 
 export default class Item extends BaseModel {
   static selfAssignPrimaryKey = true
@@ -33,6 +34,9 @@ export default class Item extends BaseModel {
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @hasMany(() => ItemEntries)
+  declare itemEntries: HasMany<typeof ItemEntries>
 
   @beforeCreate()
   static assignUuid(item: Item) {
