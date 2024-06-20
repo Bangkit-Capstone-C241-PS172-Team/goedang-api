@@ -28,6 +28,11 @@ router
     router.get('/item_entries/item/:id', '#controllers/item_entries_controller.indexByItemId')
     // Sales Overview
     router.get('/sales_overview', '#controllers/item_entries_controller.indexSalesOverview')
+    // Items with Last Entry
+    router.get(
+      '/items_with_last_entry',
+      '#controllers/item_entries_controller.indexItemsWithLastEntry'
+    )
     // Get Current User
     router.get('/me', '#controllers/auth_controller.me').as('auth.me')
   })
