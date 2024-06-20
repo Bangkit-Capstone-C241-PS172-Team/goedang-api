@@ -1,10 +1,13 @@
 import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm'
+import { BaseModel, beforeCreate, column, hasMany } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import { randomUUID } from 'node:crypto'
+import ItemEntries from './item_entry.js'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
+import Item from './item.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -36,6 +39,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   static assignUuid(user: User) {
     user.id = randomUUID()
   }
+
+  @hasMany(() => Item)
+  declare items: HasMany<typeof Item>
+
+  @hasMany(() => ItemEntries)
+  declare itemEntries: HasMany<typeof ItemEntries>
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 }
