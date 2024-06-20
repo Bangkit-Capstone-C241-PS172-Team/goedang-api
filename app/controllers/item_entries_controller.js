@@ -1,3 +1,4 @@
+import Item from '#models/item';
 import ItemEntries from '#models/item_entry';
 export default class ItemEntriesController {
     async index({ response, auth, request }) {
@@ -75,6 +76,84 @@ export default class ItemEntriesController {
         catch (error) {
             console.error(error);
             return response.status(500).send({ message: 'Failed to delete entry', error: error.message });
+        }
+    }
+    async indexByItemId({ params, response, auth }) {
+        try {
+            await auth.check();
+            const userId = auth.user?.id;
+            if (userId === undefined) {
+                return response.status(401).send({ message: 'You must login to access this resource' });
+            }
+            const { id } = params;
+            const entries = await ItemEntries.findManyBy({ userId: userId, itemId: id });
+            return response.status(200).send(entries);
+        }
+        catch (error) {
+            console.error(error);
+            return response.status(404).send({ message: 'Entry not found', error: error.message });
+        }
+    }
+    async indexItemsWithLastEntry({ response, auth }) {
+        try {
+            await auth.check();
+            const userId = auth.user?.id;
+            if (userId === undefined) {
+                return response.status(401).send({ message: 'You must login to access this resource' });
+            }
+            const items = await Item.query()
+                .where('user_id', userId ?? '')
+                .preload('itemEntries', (entriesQuery) => {
+                entriesQuery.orderBy('created_at', 'desc');
+            });
+            const itemsWithEntries = items.filter((item) => item.itemEntries.length > 0);
+            const itemsWithLastEntries = itemsWithEntries.map((item) => {
+                return {
+                    ...item.serialize(),
+                    lastEntry: item.itemEntries[0],
+                };
+            });
+            return response.status(200).send(itemsWithLastEntries);
+        }
+        catch (error) {
+            console.error(error);
+            return response.status(404).send({ message: 'Entry not found', error: error.message });
+        }
+    }
+    async indexSalesOverview({ response, auth }) {
+        try {
+            await auth.check();
+            const userId = auth.user?.id;
+            if (userId === undefined) {
+                return response.status(401).send({ message: 'You must login to access this resource' });
+            }
+            const items = await Item.query()
+                .where('user_id', userId ?? '')
+                .preload('itemEntries', (entriesQuery) => {
+                entriesQuery.orderBy('created_at', 'desc');
+            });
+            const dailySales = [];
+            items.forEach((item) => {
+                item.itemEntries.forEach((entry) => {
+                    const date = entry.createdAt.toString().split('T')[0];
+                    const sales = entry.inOut === 'out' ? entry.total : 0;
+                    const existingDateIndex = dailySales.findIndex((sale) => sale.date === date);
+                    if (existingDateIndex !== -1) {
+                        dailySales[existingDateIndex].totalSales += sales;
+                    }
+                    else {
+                        dailySales.push({ date, totalSales: sales });
+                    }
+                });
+            });
+            dailySales.sort((a, b) => (a.date < b.date ? -1 : 1));
+            return response.status(200).send(dailySales);
+        }
+        catch (error) {
+            console.error(error);
+            return response
+                .status(404)
+                .send({ message: 'Sales overview not found', error: error.message });
         }
     }
 }

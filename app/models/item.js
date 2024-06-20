@@ -8,9 +8,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { DateTime } from 'luxon';
-import { BaseModel, beforeCreate, belongsTo, column } from '@adonisjs/lucid/orm';
+import { BaseModel, beforeCreate, belongsTo, column, hasMany } from '@adonisjs/lucid/orm';
 import User from './user.js';
 import { randomUUID } from 'node:crypto';
+import ItemEntries from './item_entry.js';
 export default class Item extends BaseModel {
     static selfAssignPrimaryKey = true;
     static assignUuid(item) {
@@ -58,6 +59,10 @@ __decorate([
     belongsTo(() => User),
     __metadata("design:type", Object)
 ], Item.prototype, "user", void 0);
+__decorate([
+    hasMany(() => ItemEntries),
+    __metadata("design:type", Object)
+], Item.prototype, "itemEntries", void 0);
 __decorate([
     beforeCreate(),
     __metadata("design:type", Function),

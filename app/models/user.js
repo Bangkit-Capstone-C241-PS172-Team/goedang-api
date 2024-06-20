@@ -10,10 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { DateTime } from 'luxon';
 import hash from '@adonisjs/core/services/hash';
 import { compose } from '@adonisjs/core/helpers';
-import { BaseModel, beforeCreate, column } from '@adonisjs/lucid/orm';
+import { BaseModel, beforeCreate, column, hasMany } from '@adonisjs/lucid/orm';
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid';
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens';
 import { randomUUID } from 'node:crypto';
+import ItemEntries from './item_entry.js';
+import Item from './item.js';
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
     uids: ['email'],
     passwordColumnName: 'password',
@@ -49,6 +51,14 @@ __decorate([
     column.dateTime({ autoCreate: true, autoUpdate: true }),
     __metadata("design:type", Object)
 ], User.prototype, "updatedAt", void 0);
+__decorate([
+    hasMany(() => Item),
+    __metadata("design:type", Object)
+], User.prototype, "items", void 0);
+__decorate([
+    hasMany(() => ItemEntries),
+    __metadata("design:type", Object)
+], User.prototype, "itemEntries", void 0);
 __decorate([
     beforeCreate(),
     __metadata("design:type", Function),

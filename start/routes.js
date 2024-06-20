@@ -12,6 +12,9 @@ router
     router.get('/item_entries/:id', '#controllers/item_entries_controller.show');
     router.put('/item_entries/:id', '#controllers/item_entries_controller.update');
     router.delete('/item_entries/:id', '#controllers/item_entries_controller.destroy');
+    router.get('/item_entries/item/:id', '#controllers/item_entries_controller.indexByItemId');
+    router.get('/sales_overview', '#controllers/item_entries_controller.indexSalesOverview');
+    router.get('/items_with_last_entry', '#controllers/item_entries_controller.indexItemsWithLastEntry');
     router.get('/me', '#controllers/auth_controller.me').as('auth.me');
 })
     .use(middleware.ensureLogin());
