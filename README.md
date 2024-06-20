@@ -31,7 +31,7 @@ goedang is a management inventory application with a price prediction feature
 
 ## API Documentations
 
-API Documentation Endpoint (Backend) : [Endpoint](https://documenter.getpostman.com/view/34807104/2sA3XTdKat)
+API Documentation Endpoint (Backend) : [Endpoint](https://documenter.getpostman.com/view/34807104/2sA3XTdKat) <br>
 API Documentation Endpoint (Machine Learning) : [Endpoint](https://documenter.getpostman.com/view/36443503/2sA3XV7KAt)
 
 ## UI/UX Design
