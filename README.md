@@ -36,6 +36,10 @@ API Documentation Endpoint (Machine Learning) : [Endpoint](https://documenter.ge
 
 ## UI/UX Design
 
-- Prototype Design : [Prototype]()
+- Prototype Design : [Prototype](https://www.figma.com/design/jdvI1ke4pqDMgD9Ha6EwSO/Goedang?node-id=0%3A1&t=TienFz5jucfNgAcq-1)
+
+## Landing Page
+
+- Landing Page Link : [Link](https://yellow-clam-911851.hostingersite.com/)
 
 ## Deployment Link
