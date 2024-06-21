@@ -50,3 +50,4 @@ API Documentation Endpoint (Machine Learning) : [Endpoint](https://documenter.ge
 - Landing Page Link : [Link](https://yellow-clam-911851.hostingersite.com/)
 
 ## Deployment Link
+- Deployment Link : [Link](https://drive.google.com/drive/folders/1koT8MbMNNMn8uyP8w_8k4el4_kGkY18b?usp=sharing)
