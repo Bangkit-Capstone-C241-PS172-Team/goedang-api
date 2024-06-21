@@ -20,6 +20,9 @@ Our team consists of 3 Machine Learning, 2 Mobile Development, and 2 Cloud Compu
 
 goedang is a management inventory application with a price prediction feature
 
+## Architecture
+
+![SystemArchitecture](https://whimsical.com/architecture-CMAycGZ4ii2m6yfoAgDLbY)
 
 ## Repositories
 
