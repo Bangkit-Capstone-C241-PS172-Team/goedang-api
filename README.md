@@ -24,6 +24,10 @@ goedang is a management inventory application with a price prediction feature
 
 Architecture Diagram : [goedang-ad](https://whimsical.com/architecture-CMAycGZ4ii2m6yfoAgDLbY) <br>
 
+## Mockup
+
+App Mockup : [goedang-am](https://www.canva.com/design/DAGIwIl-ldE/fsXr4krWvYkbxBNfvSAWQQ/edit?utm_content=DAGIwIl-ldE&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton) <br>
+
 ## Repositories
 
 |    Branch Name     |                                      Branch Link                                         |
