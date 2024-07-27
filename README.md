@@ -1,6 +1,8 @@
 # Goedang
 ## Bangkit Capstone Project 2024
 
+![image](https://github.com/user-attachments/assets/1e1586f8-a550-41bf-9c20-dd4d5bb9bc0a)
+
 Bangkit Capstone Team ID : C241 - PS172 <br>
 Our team consists of 3 Machine Learning, 2 Mobile Development, and 2 Cloud Computing.
 
